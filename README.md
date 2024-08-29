@@ -13,31 +13,30 @@
      . Typeorm
      . Docker
 
-1. Levantar la base de datos
+1. Clonar proyecto
+
+2. Hacer ```npm install```
+
+3. Clonar el archivo __.env.template.__ y renombrarlo a __.env__
+
+4. Configurar en __app.module.ts__ el root del __.env__ para el proyecto
+
+    ```npm i @nestjs/config```
+    
+        .  @Module({
+             imports: [ConfigModule.forRoot()],
+            })
+        Para usar las variables .env
+        . constructor(
+            private readonly configService:ConfigService
+            ){}
+    
+    ```
+
+5. Levantar la base de datos
 ```docker-compose up -d ```
 
-2. Configurar en __app.module.ts__ el root del __.env__ para el proyecto
 
-```npm i @nestjs/config```
+6. Instalar la bd
 
-    .  @Module({
-         imports: [ConfigModule.forRoot()],
-        })
-    Para usar las variables .env
-    . constructor(
-        private readonly configService:ConfigService
-        ){}
-
-3. Crear el archivo __.env__ con las siguientes variables de entorno:
-
-```
-    DB_PASSWORD=password
-    DB_NAME=dbname
-    DB_HOST= localhost
-    DB_PORT = 5432
-    DB_USERNAMEDB= postgres
-```
-
-4. Instalar la bd
-
-```$ npm install --save @nestjs/typeorm typeorm```
+```$ npm install --save @nestjs/typeorm typeorm  npm install pg --save```
