@@ -23,12 +23,21 @@
     .  @Module({
          imports: [ConfigModule.forRoot()],
         })
-    # Para usar las variables .env
+    Para usar las variables .env
     . constructor(
         private readonly configService:ConfigService
         ){}
 
 3. Crear el archivo __.env__ con las siguientes variables de entorno:
 
-```DB_PASSWORD=una password cualquiera```
-```DB_NAME=nombre de la bd```
+```
+    DB_PASSWORD=password
+    DB_NAME=dbname
+    DB_HOST= localhost
+    DB_PORT = 5432
+    DB_USERNAMEDB= postgres
+```
+
+4. Instalar la bd
+
+```$ npm install --save @nestjs/typeorm typeorm```
