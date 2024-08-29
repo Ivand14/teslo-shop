@@ -30,13 +30,10 @@
         . constructor(
             private readonly configService:ConfigService
             ){}
-    
     ```
 
 5. Levantar la base de datos
 ```docker-compose up -d ```
 
 
-6. Instalar la bd
-
-```$ npm install --save @nestjs/typeorm typeorm  npm install pg --save```
+6. Instalar la bd ```$ npm install --save @nestjs/typeorm typeorm``` ```npm install pg --save```
