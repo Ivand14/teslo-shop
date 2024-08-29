@@ -7,6 +7,12 @@
 
 # Teslo Api
 
+# Tecnologias utilizadas:
+     . NestJs
+     . Postgresql
+     . Typeorm
+     . Docker
+
 1. Levantar la base de datos
 ```docker-compose up -d ```
 
