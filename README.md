@@ -16,7 +16,19 @@
 1. Levantar la base de datos
 ```docker-compose up -d ```
 
-2. Crear el archivo __.env__ con las siguientes variables de entorno:
+2. Configurar en __app.module.ts__ el root del __.env__ para el proyecto
+
+```npm i @nestjs/config```
+
+    .  @Module({
+         imports: [ConfigModule.forRoot()],
+        })
+    # Para usar las variables .env
+    . constructor(
+        private readonly configService:ConfigService
+        ){}
+
+3. Crear el archivo __.env__ con las siguientes variables de entorno:
 
 ```DB_PASSWORD=una password cualquiera```
 ```DB_NAME=nombre de la bd```
