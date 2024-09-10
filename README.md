@@ -19,7 +19,9 @@
 
 3. Clonar el archivo __.env.template.__ y renombrarlo a __.env__
 
-4. Configurar en __app.module.ts__ el root del __.env__ para el proyecto
+4. Ejecutar SEED ```localhost:3000/api/seed```
+
+5. Configurar en __app.module.ts__ el root del __.env__ para el proyecto
 
     ```npm i @nestjs/config```
     
@@ -32,8 +34,8 @@
             ){}
     ```
 
-5. Levantar la base de datos
+6. Levantar la base de datos
 ```docker-compose up -d ```
 
 
-6. Instalar la bd ```$ npm install --save @nestjs/typeorm typeorm``` ```npm install pg --save```
+7. Instalar la bd ```$ npm install --save @nestjs/typeorm typeorm``` ```npm install pg --save```
