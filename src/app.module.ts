@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeedModule } from './seed/seed.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { SeedModule } from './seed/seed.module';
     }),
     ProductsModule,
     CommonModule,
-    SeedModule
+    SeedModule,
+    FilesModule
   ]
 })
 
