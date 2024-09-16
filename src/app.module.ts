@@ -8,6 +8,7 @@ import { SeedModule } from './seed/seed.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { join } from 'path';
     FilesModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname,'..','public'),
-    })
+    }),
+    AuthModule
   ]
 })
 
