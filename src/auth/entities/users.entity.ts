@@ -1,6 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({name:'Users'})
+@Entity({name:'users'})
 export class users {
     @PrimaryGeneratedColumn('uuid')
     id:string
@@ -9,19 +9,14 @@ export class users {
         unique:true,
         nullable:false
     })
+    email:string
 
     @Column('text',{
         unique:true,
-        nullable:false,
+        nullable:false
     })
-    email:string
-
-    @Column('text')
     password:string
 
-    @Column('boolean')
-    isActive:boolean
-    
     @Column('text')
     fullName:string
 
@@ -29,5 +24,4 @@ export class users {
         array:true
     })
     roles:string[]
-    
 }

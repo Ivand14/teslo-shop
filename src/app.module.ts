@@ -1,5 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { FilesModule } from './files/files.module';
 import { Module } from '@nestjs/common';
@@ -8,7 +9,6 @@ import { SeedModule } from './seed/seed.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,10 +27,10 @@ import { AuthModule } from './auth/auth.module';
     CommonModule,
     SeedModule,
     FilesModule,
+    AuthModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname,'..','public'),
-    }),
-    AuthModule
+    })
   ]
 })
 

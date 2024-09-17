@@ -5,6 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { users } from './entities/users.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([users])]
+  controllers: [AuthController],
+  providers: [AuthService],
+  imports:[
+    TypeOrmModule.forFeature([users])
+  ]
 })
 export class AuthModule {}
