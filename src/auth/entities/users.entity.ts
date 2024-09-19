@@ -13,7 +13,8 @@ export class users {
 
     @Column('text',{
         unique:true,
-        nullable:false
+        nullable:false,
+        select:false
     })
     password:string
 
