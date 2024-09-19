@@ -1,4 +1,4 @@
-import { JwtStrategyInterface } from "../interfaces/jwt.interfaces";
+import { JwtPayload } from "../interfaces/jwt.interfaces";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { users } from "../entities/users.entity";
@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         })
     }
 
-    async validate(payload:JwtStrategyInterface): Promise<users> {
+    async validate(payload:JwtPayload): Promise<users> {
         
         const{email} = payload
 
