@@ -21,7 +21,13 @@ export class users {
     fullName:string
 
     @Column('text',{
-        array:true
+        default:true
+    })
+    isActive:true
+
+    @Column('text',{
+        array:true,
+        default:['user']
     })
     roles:string[]
 }
