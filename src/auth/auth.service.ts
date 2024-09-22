@@ -5,6 +5,8 @@ import { users } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import { loginUserDto } from './dto/login-user.dto';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './interfaces/jwt.interfaces';
 
 
 @Injectable()
@@ -14,7 +16,10 @@ export class AuthService {
 
   constructor(
     @InjectRepository(users)
-    private readonly usersRepository : Repository<users>
+    private readonly usersRepository : Repository<users>,
+
+    private readonly jwtService : JwtService
+
   ){}
 
   async create(createUserDto:createUserDto) {
@@ -31,8 +36,11 @@ export class AuthService {
 
       await this.usersRepository.save(user)
       delete user.password
-      //TODO: Devolver el JWT de acceso
-      return user
+
+      return {
+        ...user,
+        token: this.getJwt({id: user.id})
+      }
 
     } catch (error) {
 
@@ -48,7 +56,7 @@ export class AuthService {
       const user = await this.usersRepository.findOne(
         {
           where:{email},
-          select:{email:true,password:true}
+          select:{email:true,password:true,id:true}
         }
       )
       
@@ -59,15 +67,20 @@ export class AuthService {
         throw new UnauthorizedException('Not valid credentials - password')
       }
 
-      return user
-      //TODO: Retornar JWT
-      
-    
+      return {
+        ...user,
+        token: this.getJwt({id: user.id})
+      }
+  }
+
+  private getJwt(payload: JwtPayload){
+    const token =  this.jwtService.sign(payload)
+    return token
   }
 
 
   private handleException(error:any):never{
-    console.log(error)
+
     if(error.code === '23505') throw new BadRequestException(error.detail)
 
     if(error.code === '23502') throw new BadRequestException('One field is missing to complete')
