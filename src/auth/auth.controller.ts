@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, SetMetadata, UseGuards } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { createUserDto } from './dto/create-user.dto';
@@ -7,6 +7,10 @@ import { AuthGuard } from '@nestjs/passport';
 import { getUser } from './decorators/get-user.decorator';
 import { users } from './entities/users.entity';
 import { rawHeaders } from './decorators/rawHeaders.decorator';
+import { UserRoleGuard } from './guards/user-role/user-role.guard';
+import { RoleProtected } from './decorators/role-protected.decorator';
+import { validRoles } from './interfaces/roles.interfaces';
+import { Auth } from './decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -36,6 +40,32 @@ export class AuthController {
       user,
       userEmail,
       rawHeaders
+    }
+  }
+
+  @Get('Private2')
+  @RoleProtected(validRoles.admin,validRoles.superUser,validRoles.user)
+  @UseGuards(AuthGuard(), UserRoleGuard)
+  testingGuards(
+    // @Req() request: Express.Request,
+    @getUser() user: users,
+  ){
+    return {
+      ok:true,
+      message:'Hola desde private',
+    }
+  }
+
+  @Get('Private3')
+  @Auth(validRoles.superUser)
+  testingCustomDecorators(
+    // @Req() request: Express.Request,
+    @getUser() user: users,
+  ){
+    return {
+      ok:true,
+      message:'Hola desde private',
+      user
     }
   }
 
