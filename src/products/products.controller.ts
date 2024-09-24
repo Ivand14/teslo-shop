@@ -3,14 +3,22 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Pagination } from 'src/common/dto/pagination-common.dtos';
+import { getUser } from 'src/auth/decorators/get-user.decorator';
+import { users } from 'src/auth/entities/users.entity';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { validRoles } from 'src/auth/interfaces/roles.interfaces';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+  @Auth(validRoles.admin)
+  create(
+    @Body() createProductDto: CreateProductDto,
+    @getUser() user:users
+  ) {
+    return this.productsService.create(createProductDto,user);
   }
 
   @Get()
@@ -24,8 +32,8 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  update(@Param('id',ParseUUIDPipe) id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(id, updateProductDto);
+  update(@Param('id',ParseUUIDPipe) id: string, @Body() updateProductDto: UpdateProductDto,@getUser() user:users) {
+    return this.productsService.update(id, updateProductDto,user);
   }
 
   @Delete(':id')
