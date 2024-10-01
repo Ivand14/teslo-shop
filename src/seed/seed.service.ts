@@ -5,13 +5,17 @@ import { users } from 'src/auth/entities/users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 
+
 @Injectable()
 export class SeedService {
 
   constructor(
     private readonly products : ProductsService,
+
     @InjectRepository(users)
-    private readonly userRepository: Repository<users>
+    private readonly userRepository: Repository<users>,
+
+    
   ){}
 
   async runSeed() {
@@ -36,19 +40,22 @@ export class SeedService {
   }
 
   
-  
+    
   private async insertUsers(){
     
     const userData = initialData.users
 
-
+    
     const user: users[] = []
+
     
     userData.forEach(userInfo => {
       user.push(this.userRepository.create(userInfo))
     })
+
     
-    const dbUser = await this.userRepository.save(userData)
+    
+    const dbUser = await this.userRepository.save(user)
     
     return dbUser[0]
     

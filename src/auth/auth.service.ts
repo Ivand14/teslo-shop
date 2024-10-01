@@ -90,4 +90,20 @@ export class AuthService {
     throw new InternalServerErrorException('Unexpected internal error')
   }
 
+  async checkAuthStatus(user:users){
+    const {id} = user
+
+    const dataUser = await this.usersRepository.findOne({
+      where:{id},
+      select:{email:true,password:true,id:true,fullName:true,isActive:true,roles:true}
+    } 
+    )
+
+    return{
+      ...dataUser,
+      token: this.getJwt({id})
+    }
+    
+  }
+
 }

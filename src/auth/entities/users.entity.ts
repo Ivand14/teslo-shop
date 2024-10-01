@@ -24,9 +24,9 @@ export class users {
     fullName:string
 
     @Column('boolean',{
-        default: false
+        default: true
     })
-    isActive:true
+    isActive:boolean
 
     @Column('text',{
         array:true,

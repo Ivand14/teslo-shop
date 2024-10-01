@@ -11,12 +11,17 @@ import { UserRoleGuard } from './guards/user-role/user-role.guard';
 import { RoleProtected } from './decorators/role-protected.decorator';
 import { validRoles } from './interfaces/roles.interfaces';
 import { Auth } from './decorators/auth.decorator';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @ApiResponse({status:200,description:'User created'})
+  @ApiResponse({status:404,description:'Missing information'})
+  @ApiResponse({status:500,description:'Internal server error'})
   createUser(@Body() createUserDto:createUserDto) {
     return this.authService.create(createUserDto);
   }
@@ -67,6 +72,14 @@ export class AuthController {
       message:'Hola desde private',
       user
     }
+  }
+
+  @Get('check-auth-status')
+  @Auth(validRoles.superUser)
+  checkAuthStatus(
+    @getUser() user: users
+  ){
+    return this.authService.checkAuthStatus(user)
   }
 
 }
